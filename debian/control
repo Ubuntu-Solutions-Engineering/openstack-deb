@@ -1,16 +1,32 @@
-Source: bigdata
+Source: openstack
 Section: admin
 Priority: extra
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.6
-Homepage: https://github.com/Ubuntu-Solutions-Engineering/bigdata-deb
-Vcs-Browser: https://github.com/Ubuntu-Solutions-Engineering/bigdata-deb
-Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/bigdata-deb.git
+Homepage: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
+Vcs-Browser: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
+Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb.git
 
-Package: bigdata
+Package: openstack
 Architecture: all
 Depends: conjure, ${misc:Depends}
-Description: Software platform for processing vast amounts of data
- Hadoop is a software platform that lets one easily write and run applications
- that process vast amounts of data.
+Breaks: cloud-installer (<< 0.99),
+        cloud-install-landscape (<< 0.99),
+        cloud-install-multi (<< 0.99),
+        cloud-install-single (<< 0.99),
+        openstack-single (0.99),
+        openstack-multi (0.99),
+        openstack-landscape (0.99)
+Replaces: cloud-installer (<< 0.99)
+        cloud-install-landscape (<< 0.99),
+        cloud-install-multi (<< 0.99),
+        cloud-install-single (<< 0.99),
+        openstack-single (0.99),
+        openstack-multi (0.99),
+        openstack-landscape (0.99)
+Description: Ubuntu Openstack Installer
+ Ubuntu OpenStack Installer provides an extremely simple way to
+ install, deploy and scale an OpenStack cloud on top of Ubuntu server
+ and Juju. Deploy onto a single physical system using virtual machines
+ for testing, or use MAAS to deploy onto a cluster of any size.

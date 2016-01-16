@@ -1,2 +1,2 @@
-# bigdata-deb
-> debian package for bigdata solutions
+# openstack-deb
+> debian package for openstack solutions

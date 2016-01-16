@@ -1,0 +1,4 @@
+#!/bin/bash
+
+conjure-setup -c /usr/share/openstack/config.json
+exit 0

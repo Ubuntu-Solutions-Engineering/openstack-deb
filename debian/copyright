@@ -1,13 +1,13 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: urwid-ubuntu
-Source: https://github.com/Ubuntu-Solutions-Engineering/conjure
+Upstream-Name: openstack
+Source: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
 
 Files: *
-Copyright: Copyright 2015, Canonical Ltd.
+Copyright: Copyright 2016, Canonical Ltd.
 License: AGPL-3.0+
 
 Files: debian/*
-Copyright: Copyright 2015, Canonical Ltd.
+Copyright: Copyright 2016, Canonical Ltd.
 License: AGPL-3.0+
 
 License: AGPL-3.0+
