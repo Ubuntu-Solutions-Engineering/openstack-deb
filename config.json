@@ -11,7 +11,8 @@
     }, {
         "key": "landscape-dense-maas",
         "name": "OpenStack Autopilot",
-        "summary": "The Canonical Distribution - Enterprise OpenStack Install and Management."
+        "summary": "The Canonical Distribution - Enterprise OpenStack Install and Management.",
+        "location": "~landscape/landscape-dense-maas"
     }],
     "bin": {
         "openstack-install": "openstack-install"
