@@ -1,4 +1,4 @@
-openstack (1.0.0) trusty; urgency=medium
+openstack (0.0.1) trusty; urgency=medium
 
   * Automatic conjure build
 

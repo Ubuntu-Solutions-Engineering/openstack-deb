@@ -11,20 +11,6 @@ Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb.git
 Package: openstack
 Architecture: all
 Depends: conjure, ${misc:Depends}
-Breaks: cloud-installer (<< 0.99),
-        cloud-install-landscape (<< 0.99),
-        cloud-install-multi (<< 0.99),
-        cloud-install-single (<< 0.99),
-        openstack-single (0.99),
-        openstack-multi (0.99),
-        openstack-landscape (0.99)
-Replaces: cloud-installer (<< 0.99)
-        cloud-install-landscape (<< 0.99),
-        cloud-install-multi (<< 0.99),
-        cloud-install-single (<< 0.99),
-        openstack-single (0.99),
-        openstack-multi (0.99),
-        openstack-landscape (0.99)
 Description: Ubuntu Openstack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to
  install, deploy and scale an OpenStack cloud on top of Ubuntu server

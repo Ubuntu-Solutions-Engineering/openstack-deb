@@ -1,2 +1,3 @@
 config.json usr/share/openstack
+metadata.json usr/share/openstack
 openstack-install usr/bin

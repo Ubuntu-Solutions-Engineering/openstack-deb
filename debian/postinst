@@ -3,7 +3,15 @@
 set -e
 
 echo ""
-echo "Please run openstack-install to finish installation."
+echo "|"
+echo "| Please run:"
+echo "|"
+echo "|  $ openstack-install"
+echo "|"
+echo "| As an unprivileged user to finish installation."
+echo "|"
 echo ""
+
+#DEBHELPER#
 
 exit 0
