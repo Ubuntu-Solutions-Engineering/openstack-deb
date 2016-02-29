@@ -1,6 +1,6 @@
 {
     "name": "openstack",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "summary": "Juju solutions for OpenStack",
     "excerpt": "Choose your OpenStack solution.",
     "maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
