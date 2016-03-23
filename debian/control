@@ -11,7 +11,7 @@ Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb.git
 Package: openstack
 Architecture: all
 Depends: conjure, ${misc:Depends}
-Description: Ubuntu Openstack Installer
+Description: Ubuntu OpenStack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to
  install, deploy and scale an OpenStack cloud on top of Ubuntu server
  and Juju. Deploy onto a single physical system using virtual machines
