@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+if [ ! -f /var/log/openstack.log ]; then
+        touch /var/log/openstack.log
+fi
+chown syslog:syslog /var/log/openstack.log
+
+ln -sf /usr/share/openstack/openstack-rsyslog.conf /etc/rsyslog.d/99-openstack.conf
+
+invoke-rc.d rsyslog restart
+
+#DEBHELPER#
