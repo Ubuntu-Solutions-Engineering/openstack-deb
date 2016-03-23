@@ -1,4 +1,4 @@
 #!/bin/bash
 
-conjure-setup -c /usr/share/openstack/config.json -m /usr/share/openstack/metadata.json
+conjure-setup -c /usr/share/openstack/config.json -m /usr/share/openstack/metadata.json $@
 exit 0
