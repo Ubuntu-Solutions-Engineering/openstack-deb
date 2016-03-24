@@ -1,5 +1,7 @@
-openstack (1.0.0) trusty; urgency=medium
+openstack (1.0.0) xenial; urgency=medium
 
-  * Automatic conjure build
+  * New upstream release
+  * Utilizes https://github.com/Ubuntu-Solutions-Engineering/conjure for
+    a more streamlined deployment approach utilizing Juju bundles.
 
- -- Adam Stokes <adam.stokes@ubuntu.com>  Wed, 02 Dec 2015 07:04:07 -0500
+ -- Adam Stokes <adam.stokes@ubuntu.com>  Thu, 24 Mar 2016 00:04:31 -0400
