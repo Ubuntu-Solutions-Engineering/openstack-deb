@@ -1,6 +1,6 @@
 {
     "name": "openstack",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "summary": "Juju solutions for OpenStack",
     "excerpt": "Juju makes it easy to deploy OpenStack at scale. Quickly and reliably build an enterprise-scale cloud run on Ubuntu - the most popular operating system for OpenStack.",
     "maintainer": "Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>",
@@ -10,6 +10,11 @@
         "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute, Network, Block Storage, Object Storage, Identity and Image services.",
         "recommendedCharms": ["glance-simplestreams-sync"]
     }, {
+        "key": "openstack-lxd",
+        "name": "OpenStack LXD",
+        "summary": "This bundle deploys an OpenStack Cloud (Liberty release), configured to use LXD (the lightweight container hypervisor).",
+        "location": "~openstack-charmers-next/openstack-lxd"
+    },  {
         "key": "landscape-dense-maas",
         "name": "OpenStack Autopilot",
         "summary": "The Canonical Distribution - Enterprise OpenStack Install and Management.",
