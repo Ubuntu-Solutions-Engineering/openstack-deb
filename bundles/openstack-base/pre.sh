@@ -1,4 +1,3 @@
 #!/bin/bash -ex
 
-cat lxd-profile.yaml | lxc profile edit juju-default
-echo '{"message": "Pre processing complete...", "returnCode": 0}'
+printf '{"message": "%s", "returnCode": %d}' "Completed pre processing" 0

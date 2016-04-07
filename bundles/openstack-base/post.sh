@@ -1,4 +1,3 @@
 #!/bin/bash -ex
 
-
-echo '{"message": "Post processing ran...", "returnCode": 0, "postStatus": true}'
+printf '{"message": "%s", "returnCode": %d, "postStatus": %s}' "Post processing complete" 0 true
