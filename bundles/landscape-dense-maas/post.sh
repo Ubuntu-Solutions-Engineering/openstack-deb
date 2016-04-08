@@ -1,3 +1,11 @@
 #!/bin/bash -ex
 
-printf '{"message": "%s", "returnCode": %d, "isComplete": %d}' "Registered against autopilot" 0 0
+
+./configure-landscape --admin-email "root@example.com" \
+                      --admin-name "administrator" \
+                      --system-email "root@example.com" \
+                      --maas-host "$MAAS_SERVER" \
+                      --maas-apikey "$MAAS_OAUTH"
+
+
+printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "Registered against autopilot" $? "true"
