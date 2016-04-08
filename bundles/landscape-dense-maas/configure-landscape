@@ -128,8 +128,6 @@ def get_landscape_host():
     """ Assuming landscape has been deployed in landscape-dense-maas form,
     find the "dns-name" of the landscape web server. """
     out = check_output('juju status --format yaml', shell=True)
-    import q
-    q(out)
     juju = yaml.load(out.decode('utf8'))
 
     try:
@@ -138,7 +136,8 @@ def get_landscape_host():
         public_address = haproxy['public-address']
         return public_address
     except KeyError:
-        raise Exception("Landscape not found!")
+        sys.exit(1)
+        # raise Exception("Landscape not found!")
 
 
 # Landscape isn't actually up when juju-deployer exits; the relations take a
