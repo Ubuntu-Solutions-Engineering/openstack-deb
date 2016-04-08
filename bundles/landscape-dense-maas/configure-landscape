@@ -128,7 +128,9 @@ def get_landscape_host():
     """ Assuming landscape has been deployed in landscape-dense-maas form,
     find the "dns-name" of the landscape web server. """
     out = check_output('juju status --format yaml', shell=True)
-    juju = yaml.load(out['output'])
+    import q
+    q(out)
+    juju = yaml.load(out.decode('utf8'))
 
     try:
         services = juju['services']
