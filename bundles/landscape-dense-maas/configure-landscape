@@ -27,6 +27,7 @@ sys.path.insert(0, lib_dir)
 import argparse  # noqa
 import requests  # noqa
 from requests.exceptions import ConnectionError  # noqa
+from requests.packages.urllib3 import disable_warnings  # noqa
 import time  # noqa
 import yaml  # noqa
 from urllib.parse import quote, urlparse, urlunparse  # noqa
@@ -40,6 +41,8 @@ MAGIC_OK_STRING = 'New user - Landscape'
 LATEST_VERSION = "2011-08-01"
 
 log = logging.getLogger('configure-landscape')
+
+disable_warnings()
 
 
 def parse(url):
