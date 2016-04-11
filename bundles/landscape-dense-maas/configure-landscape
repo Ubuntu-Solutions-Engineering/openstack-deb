@@ -16,18 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import sys
-
-# Handle imports where the path is not automatically updated during install.
-# This really only happens when a binary is not in the usual /usr/bin location
-lib_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.insert(0, lib_dir)
-
 import argparse  # noqa
 import requests  # noqa
 from requests.exceptions import ConnectionError  # noqa
-from requests.packages.urllib3 import disable_warnings  # noqa
+from requests.packages.urllib3.exceptions import InsecureRequestWarning  # noqa
 import time  # noqa
 import yaml  # noqa
 from urllib.parse import quote, urlparse, urlunparse  # noqa
@@ -42,7 +35,8 @@ LATEST_VERSION = "2011-08-01"
 
 log = logging.getLogger('configure-landscape')
 
-disable_warnings()
+# Disable the insecure request warning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def parse(url):
