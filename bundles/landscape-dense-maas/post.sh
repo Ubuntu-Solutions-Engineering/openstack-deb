@@ -7,7 +7,7 @@ RET=$?
 if [ $RET -ne 0 ]; then
     result_bool="false"
     result=$RET
-    result_message="Failed to register, maybe Landscape is not quite up yet."
+    result_message="Autopilot is still pending, will retry registering when available."
 else
     result=0
     result_bool="true"
