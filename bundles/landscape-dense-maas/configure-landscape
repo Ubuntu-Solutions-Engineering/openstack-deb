@@ -163,7 +163,7 @@ def register_new_user(host, **kwargs):
     """ Register a new user. Takes kwargs admin_email admin_name, and
     system_email. """
     kwargs['root_url'] = 'https://%s/' % host
-    kwargs['admin_password'] = "changeMe12345"
+    kwargs['admin_password'] = "ubuntu123"
 
     res = run_query('anonymous',
                     'anonymous',

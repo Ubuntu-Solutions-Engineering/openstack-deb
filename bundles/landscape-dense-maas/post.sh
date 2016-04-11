@@ -11,7 +11,7 @@ if [ $RET -ne 0 ]; then
 else
     result=0
     result_bool="true"
-    result_message="Finish registration by visiting http://$hostname/account/standalone/openstack with Email: root@example.com Password: changeMe12345"
+    result_message="Access Autopilot: http://$hostname/account/standalone/openstack l: root@example.com p: ubuntu123"
 fi
 
 printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "$result_message" $result "$result_bool"
