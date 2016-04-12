@@ -1,6 +1,4 @@
-#!/bin/bash -ex
-
-. common.sh
+#!/bin/bash
 
 if [ $JUJU_PROVIDERTYPE == "lxd" ]; then
     cat lxd-profile.yaml | lxc profile edit juju-default

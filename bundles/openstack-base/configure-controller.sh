@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # NOTE: this script exits on errors and will be re-run if it returns
 # any error value, so please ensure that commands are either safe to
