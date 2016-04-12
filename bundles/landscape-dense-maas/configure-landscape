@@ -33,7 +33,7 @@ from subprocess import check_output  # noqa
 MAGIC_OK_STRING = 'New user - Landscape'
 LATEST_VERSION = "2011-08-01"
 
-log = logging.getLogger('configure-landscape')
+log = logging.getLogger('openstack')
 
 # Disable the insecure request warning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -194,7 +194,7 @@ def main():
                         help="the apikey of the MAAS instance")
 
     args = parser.parse_args()
-
+    log.debug(args)
     host = get_landscape_host()
     wait_for_landscape(host)
     auth = register_new_user(host, admin_email=args.admin_email,

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /usr/share/conjure/hooklib/common.sh
+
 landscape_exec=/usr/share/openstack/bundles/landscape-dense-maas/configure-landscape
 hostname=`$landscape_exec --admin-email "root@example.com" --admin-name "administrator" --system-email "root@example.com" --maas-host "$MAAS_SERVER" --maas-apikey "$MAAS_OAUTH"`
 
@@ -14,4 +16,4 @@ else
     result_message="Access Autopilot: http://$hostname/account/standalone/openstack l: root@example.com p: ubuntu123"
 fi
 
-printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "$result_message" $result "$result_bool"
+exposeResult "$result_message" $result "$result_bool"
