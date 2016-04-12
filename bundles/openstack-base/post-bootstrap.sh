@@ -5,7 +5,7 @@
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     debug openstack "(post-bootstrap) processing lxd"
 
-    cat lxd-profile.yaml | lxc profile edit juju-default
+    cat lxd-profile.yaml | lxc profile edit juju-`juju switch`
 
     RET=$?
     if [ $RET -ne 0 ]; then
