@@ -8,7 +8,8 @@
         "key": "openstack-base",
         "name": "OpenStack",
         "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute, Network, Block Storage, Object Storage, Identity and Image services.",
-        "recommendedCharms": ["glance-simplestreams-sync"]
+        "recommendedCharms": ["glance-simplestreams-sync"],
+        "whitelist": ["maas", "lxd"]
     }, {
         "key": "landscape-dense-maas",
         "name": "OpenStack Autopilot",

@@ -1,12 +1,25 @@
 #!/bin/bash
 
-if [ $JUJU_PROVIDERTYPE == "lxd" ]; then
+. /usr/share/conjure/hooklib/common.sh
+
+if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
+    debug openstack "(post-bootstrap) processing lxd"
+
     cat lxd-profile.yaml | lxc profile edit juju-default
 
     RET=$?
     if [ $RET -ne 0 ]; then
-        printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "Failed" $RET "false"
+        exposeResult "Failed" $RET "false"
     else
-        printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "Post bootstrap complete" 0 "true"
+        exposeResult "Post bootstrap complete" 0 "true"
     fi
+
+elif [[ $JUJU_PROVIDERTYPE =~ "maas" ]]; then
+    debug openstack "(post-bootstrap) processing MAAS selection"
+
+    exposeResult "Post complete" 0 "true"
+else
+    debug openstack "(post-bootstrap) unknown provider type $JUJU_PROVIDERTYPE"
+
+    exposeResult "Unknown provider type" 1 "false"
 fi

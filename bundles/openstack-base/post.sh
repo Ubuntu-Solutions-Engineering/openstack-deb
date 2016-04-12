@@ -1,12 +1,24 @@
 #!/bin/bash
 
-. /usr/share/openstack/bundles/common.sh
+. /usr/share/conjure/hooklib/common.sh
 
-debug "Creating directory $HOME/.local/share/openstack for additional storage."
-mkdir -p $HOME/.local/share/openstack
+if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
+    debug openstack "(post) processing lxd"
 
-controller_address=$(unitAddress keystone 0)
-configOpenrc admin password admin http://$controller_address:5000/v2.0 RegionOne > $HOME/.local/share/openstack/admin-openrc
-configOpenrc ubuntu password admin http://$controller_address:5000/v2.0 RegionOne > $HOME/.local/share/openstack/ubuntu-openrc
+    controller_address=$(unitAddress keystone 0)
+    debug openstack "(post) found controller: $controller_address"
 
-printf '{"message": "%s", "returnCode": %d, "isComplete": %s}' "Post processing complete" 0 "true"
+    # configOpenrc admin password admin http://$controller_address:5000/v2.0 RegionOne
+    # configOpenrc ubuntu password admin http://$controller_address:5000/v2.0 RegionOne
+
+    exposeResult "Post complete" 0 "true"
+
+elif [[ $JUJU_PROVIDERTYPE =~ "maas" ]]; then
+    debug openstack "(post) processing MAAS selection"
+
+    exposeResult "Post complete" 0 "true"
+else
+    debug openstack "(post) unknown provider type $JUJU_PROVIDERTYPE"
+
+    exposeResult "Unknown provider type" 1 "false"
+fi
