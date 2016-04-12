@@ -1,3 +1,9 @@
+openstack (1.0.4) UNRELEASED; urgency=medium
+
+  * Next release
+
+ -- Adam Stokes <adam.stokes@ubuntu.com>  Tue, 12 Apr 2016 09:17:14 -0400
+
 openstack (1.0.3) xenial-proposed; urgency=medium
 
   * Add processing hooks for Autopilot
