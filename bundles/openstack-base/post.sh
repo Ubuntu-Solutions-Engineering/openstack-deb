@@ -8,7 +8,7 @@ debug openstack "(post) keystone address: $controller_address"
 
 if [ $controller_address != "null" ]; then
     debug openstack "(post) found controller: $controller_address"
-    exposeResult "Post complete" 0 "true"
+    exposeResult "Found keystone" 0 "false"
 else
     exposeResult "Unable to determine keystone address, retrying" 1 "false"
 fi
