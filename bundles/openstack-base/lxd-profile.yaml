@@ -1,4 +1,4 @@
-name: juju-default
+name: juju-##MODEL##
 config:
   boot.autostart: "true"
   security.nesting: "true"
