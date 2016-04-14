@@ -17,7 +17,5 @@
         "location": "~landscape/landscape-dense-maas",
         "whitelist": ["maas"]
     }],
-    "bin": {
-        "openstack-install": "openstack-install"
-    }
+    "bin": "openstack-install"
 }

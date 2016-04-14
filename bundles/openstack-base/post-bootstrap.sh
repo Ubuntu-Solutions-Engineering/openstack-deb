@@ -14,11 +14,6 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     else
         exposeResult "Post bootstrap complete" 0 "true"
     fi
-
-elif [[ $JUJU_PROVIDERTYPE =~ "maas" ]]; then
-    debug openstack "(post-bootstrap) processing MAAS selection"
-
-    exposeResult "Post complete" 0 "true"
 else
     debug openstack "(post-bootstrap) unknown provider type $JUJU_PROVIDERTYPE"
 
