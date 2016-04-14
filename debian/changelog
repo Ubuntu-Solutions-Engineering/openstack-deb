@@ -1,6 +1,14 @@
-openstack (1.0.4) UNRELEASED; urgency=medium
+openstack (1.0.5) UNRELEASED; urgency=medium
 
-  * Next release
+  * Next dev
+
+ -- Adam Stokes <adam.stokes@ubuntu.com>  Thu, 14 Apr 2016 16:04:25 -0400
+
+openstack (1.0.4) xenial-proposed; urgency=medium
+
+  * Add bootstrap series support to Autopilot
+  * Update OpenStack processing hooks to preconfigure some security
+    exceptions to allow ssh.
 
  -- Adam Stokes <adam.stokes@ubuntu.com>  Tue, 12 Apr 2016 09:17:14 -0400
 
