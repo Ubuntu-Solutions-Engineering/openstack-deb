@@ -15,7 +15,8 @@
         "name": "OpenStack Autopilot",
         "summary": "The Canonical Distribution - Enterprise OpenStack Install and Management.",
         "location": "~landscape/landscape-dense-maas",
-        "whitelist": ["maas"]
+        "whitelist": ["maas"],
+        "bootstrapSeries": "trusty"
     }],
     "bin": "openstack-install"
 }
