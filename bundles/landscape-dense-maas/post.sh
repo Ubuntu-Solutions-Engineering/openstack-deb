@@ -17,3 +17,4 @@ else
 fi
 
 exposeResult "$result_message" $result "$result_bool"
+exit $RET
