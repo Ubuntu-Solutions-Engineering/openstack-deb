@@ -23,7 +23,7 @@ fi
 dashboard_address=$(unitAddress openstask-dashboard 0)
 if [ $dashboard_address != "null" ]; then
     exposeResult "Login to Horizon: http://$dashboard_address/horizon l: admin p: openstack" 0 "true"
-    exit 1
+    exit 0
 else
     exposeResult "Waiting for the dashboard to become available..." 1 "false"
     exit 1
