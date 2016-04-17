@@ -2,7 +2,7 @@ Source: openstack
 Section: admin
 Priority: extra
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Build-Depends: debhelper (>= 9), conjure, help2man
+Build-Depends: debhelper (>= 9), conjure-up
 Standards-Version: 3.9.7
 Homepage: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
 Vcs-Browser: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
@@ -10,7 +10,7 @@ Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb.git
 
 Package: openstack
 Architecture: all
-Depends: conjure, python3, ${misc:Depends}
+Depends: conjure-up, python3, ${misc:Depends}
 Description: Ubuntu OpenStack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to
  install, deploy and scale an OpenStack cloud on top of Ubuntu server
