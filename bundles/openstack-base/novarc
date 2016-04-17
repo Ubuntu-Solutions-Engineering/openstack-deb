@@ -1,4 +1,3 @@
-#!/bin/bash
 export OS_USERNAME=admin
 export OS_PASSWORD=openstack
 export OS_TENANT_NAME=admin

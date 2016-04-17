@@ -17,6 +17,5 @@
         "location": "~landscape/landscape-dense-maas",
         "whitelist": ["maas"],
         "bootstrapSeries": "trusty"
-    }],
-    "bin": "openstack-install"
+    }]
 }
