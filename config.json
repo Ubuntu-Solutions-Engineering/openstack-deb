@@ -10,6 +10,13 @@
         "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute, Network, Block Storage, Object Storage, Identity and Image services.",
         "recommendedCharms": ["glance-simplestreams-sync"],
         "whitelist": ["maas", "lxd", "localhost"]
+    },{
+        "key": "openstack-lxd",
+        "name": "OpenStackLXD",
+        "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute via LXD containers, Network, Block Storage, Object Storage, Identity and Image services.",
+        "whitelist": ["maas", "lxd", "localhost"],
+        "bootstrapSeries": "xenial",
+        "location": "/usr/share/openstack/bundles/openstack-lxd/bundle.yaml"
     }, {
         "key": "landscape-dense-maas",
         "name": "OpenStack Autopilot",
