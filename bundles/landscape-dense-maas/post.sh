@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /usr/share/conjure/hooklib/common.sh
+. /usr/share/conjure-up/hooklib/common.sh
 
 landscape_exec=/usr/share/openstack/bundles/landscape-dense-maas/configure-landscape
 hostname=`$landscape_exec --admin-email "root@example.com" --admin-name "administrator" --system-email "root@example.com" --maas-host "$MAAS_SERVER" --maas-apikey "$MAAS_OAUTH"`

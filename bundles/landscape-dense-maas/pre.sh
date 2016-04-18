@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /usr/share/conjure/hooklib/common.sh
+. /usr/share/conjure-up/hooklib/common.sh
 
 debug openstack "Running pre-exec hook"
 
