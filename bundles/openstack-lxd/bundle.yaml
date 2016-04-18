@@ -129,12 +129,12 @@ services:
     annotations:
       "gui-x": "250"
       "gui-y": "500"
-  ntp:
-    charm: "cs:~openstack-charmers-next/xenial/ntp"
-    series: xenial
-    annotations:
-      "gui-x": "1000"
-      "gui-y": "0"
+  # ntp:
+  #   charm: "cs:~openstack-charmers-next/xenial/ntp"
+  #   series: xenial
+  #   annotations:
+  #     "gui-x": "1000"
+  #     "gui-y": "0"
 relations:
   - - "openstack-dashboard:identity-service"
     - "keystone:identity-service"
@@ -174,14 +174,14 @@ relations:
     - "neutron-api:neutron-api"
   - - "ceph:client"
     - "glance:ceph"
-  - - "ntp:juju-info"
-    - "nova-compute:juju-info"
+  # - - "ntp:juju-info"
+  #   - "nova-compute:juju-info"
   - - "neutron-api:identity-service"
     - "keystone:identity-service"
   - - "ceph-radosgw:mon"
     - "ceph:radosgw"
-  - - "ntp:juju-info"
-    - "neutron-gateway:juju-info"
+  # - - "ntp:juju-info"
+  #   - "neutron-gateway:juju-info"
   - - "nova-compute:image-service"
     - "glance:image-service"
   - - "neutron-gateway:neutron-plugin-api"

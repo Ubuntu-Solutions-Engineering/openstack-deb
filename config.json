@@ -12,7 +12,7 @@
         "whitelist": ["maas", "lxd", "localhost"]
     },{
         "key": "openstack-lxd",
-        "name": "OpenStackLXD",
+        "name": "OpenStack Nova-LXD",
         "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute via LXD containers, Network, Block Storage, Object Storage, Identity and Image services.",
         "whitelist": ["maas", "lxd", "localhost"],
         "bootstrapSeries": "xenial",
