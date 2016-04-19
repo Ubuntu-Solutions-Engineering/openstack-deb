@@ -4,6 +4,8 @@
 . $SCRIPTPATH/../bundle-common.sh
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
+    debug openstack "(post) setting credentials"
+
     . $SCRIPTPATH/novarc
 
     # debug openstack "(post) setting osd-devices for ceph"
