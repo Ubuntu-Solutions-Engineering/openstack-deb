@@ -40,44 +40,44 @@ config_ceph() {
 # NEUTRON
 # Configures neutron
 config_neutron() {
-    neutron net-create --router:external ext-net
+    neutron net-create --router:external ext-net 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
-    neutron subnet-show ext-subnet || neutron subnet-create ext-net 10.99.0.0/24 \
-                                              --gateway 10.99.0.1 \
-                                              --allocation-pool start=10.99.0.2,end=10.99.0.254
-    RET=$?
-    if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
-    fi
-
-    neutron net-show ubuntu-net || neutron net-create ubuntu-net --shared
+    neutron subnet-create ext-net 10.99.0.0/24 \
+            --gateway 10.99.0.1 \
+            --allocation-pool start=10.99.0.2,end=10.99.0.254 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
 
-    neutron subnet-create --name ubuntu-subnet --gateway 10.101.0.1 --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24
+    neutron net-create ubuntu-net --shared
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
 
-    neutron router-create ubuntu-router
+    neutron subnet-create --name ubuntu-subnet --gateway 10.101.0.1 --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
 
-    neutron router-interface-add ubuntu-router ubuntu-subnet
+    neutron router-create ubuntu-router 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
 
-    neutron router-gateway-set ubuntu-router ext-net # OK to run multiple times
+    neutron router-interface-add ubuntu-router ubuntu-subnet 2> /dev/null
+    RET=$?
+    if [ $RET -ne 0 ]; then
+        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+    fi
+
+    neutron router-gateway-set ubuntu-router ext-net 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
@@ -88,17 +88,17 @@ config_neutron() {
     to_create=$((6 - existingips))
     i=0
     while [ $i -ne $to_create ]; do
-        neutron floatingip-create ext-net
+        neutron floatingip-create ext-net 2> /dev/null
         i=$((i + 1))
     done
     # configure security groups
-    neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol icmp --remote-ip-prefix 0.0.0.0/0 default
+    neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol icmp --remote-ip-prefix 0.0.0.0/0 default 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
     fi
 
-    neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 --remote-ip-prefix 0.0.0.0/0 default
+    neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 --remote-ip-prefix 0.0.0.0/0 default 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "(post) neutron not configurable yet..." 1 "false"
