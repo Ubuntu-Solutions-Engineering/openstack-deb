@@ -4,11 +4,10 @@
 . $SCRIPTPATH/../bundle-common.sh
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
-
     . $SCRIPTPATH/novarc
 
-    debug openstack "(post) setting osd-devices for ceph"
-    config_ceph
+    # debug openstack "(post) setting osd-devices for ceph"
+    # config_ceph
     debug openstack "(post) configuring neutron"
     config_neutron
 fi
@@ -19,3 +18,4 @@ if [ $dashboard_address != "null" ]; then
 else
     exposeResult "Waiting for the dashboard to become available..." 1 "false"
 fi
+

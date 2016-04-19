@@ -1,4 +1,4 @@
+bundles usr/share/openstack
 config.json usr/share/openstack
 metadata.json usr/share/openstack
 openstack-rsyslog.conf usr/share/openstack
-bundles usr/share/openstack

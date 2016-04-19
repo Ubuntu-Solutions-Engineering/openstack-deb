@@ -1,198 +1,198 @@
-# Juju: 2.0bets4 (was a patched binary of beta3 to get around the series issue)
-# MAAS: 1.9.1+bzr4543-0ubuntu1~trusty1
-
+machines:
+  '0':
+    constraints: arch=amd64
+    series: xenial
+  '1':
+    constraints: arch=amd64
+    series: xenial
+  '2':
+    constraints: arch=amd64
+    series: xenial
+  '3':
+    constraints: arch=amd64
+    series: xenial
+relations:
+- - nova-compute:amqp
+  - rabbitmq-server:amqp
+- - neutron-gateway:amqp
+  - rabbitmq-server:amqp
+- - keystone:shared-db
+  - mysql:shared-db
+- - nova-cloud-controller:identity-service
+  - keystone:identity-service
+- - glance:identity-service
+  - keystone:identity-service
+- - neutron-api:identity-service
+  - keystone:identity-service
+- - neutron-openvswitch:neutron-plugin-api
+  - neutron-api:neutron-plugin-api
+- - neutron-api:shared-db
+  - mysql:shared-db
+- - neutron-api:amqp
+  - rabbitmq-server:amqp
+- - neutron-gateway:neutron-plugin-api
+  - neutron-api:neutron-plugin-api
+- - glance:shared-db
+  - mysql:shared-db
+- - glance:amqp
+  - rabbitmq-server:amqp
+- - nova-cloud-controller:image-service
+  - glance:image-service
+- - nova-compute:image-service
+  - glance:image-service
+- - nova-cloud-controller:cloud-compute
+  - nova-compute:cloud-compute
+- - nova-cloud-controller:amqp
+  - rabbitmq-server:amqp
+- - nova-cloud-controller:quantum-network-service
+  - neutron-gateway:quantum-network-service
+- - nova-compute:neutron-plugin
+  - neutron-openvswitch:neutron-plugin
+- - neutron-openvswitch:amqp
+  - rabbitmq-server:amqp
+- - openstack-dashboard:identity-service
+  - keystone:identity-service
+- - nova-cloud-controller:shared-db
+  - mysql:shared-db
+- - nova-cloud-controller:neutron-api
+  - neutron-api:neutron-api
+- - ceph:client
+  - nova-compute:ceph
+- - ceph:client
+  - glance:ceph
+- - ceph-osd:mon
+  - ceph:osd
+# - - ntp:juju-info
+#   - nova-compute:juju-info
+# - - ntp:juju-info
+#   - neutron-gateway:juju-info
+- - ceph-radosgw:mon
+  - ceph:radosgw
+- - ceph-radosgw:identity-service
+  - keystone:identity-service
+- - nova-compute:lxd
+  - lxd:lxd
 series: xenial
 services:
-  "rabbitmq-server":
-    charm: "cs:~openstack-charmers-next/xenial/rabbitmq-server"
-    series: xenial
-    num_units: 1
-    annotations:
-      "gui-x": "500"
-      "gui-y": "250"
-  lxd:
-    charm: "cs:~openstack-charmers-next/xenial/lxd"
-    series: xenial
-    options:
-      "block-device": /srv/lxd.img|50G
-      overwrite: true
-      "storage-type": zfs
-    annotations:
-      "gui-x": "750"
-      "gui-y": "250"
-  mysql:
-    charm: "cs:~openstack-charmers-next/xenial/percona-cluster"
-    series: xenial
-    num_units: 1
-    options:
-      "max-connections": 20000
-    annotations:
-      "gui-x": "0"
-      "gui-y": "250"
-  "openstack-dashboard":
-    charm: "cs:~openstack-charmers-next/xenial/openstack-dashboard"
-    series: xenial
-    num_units: 1
-    annotations:
-      "gui-x": "500"
-      "gui-y": "-250"
-  keystone:
-    charm: "cs:~openstack-charmers-next/xenial/keystone"
-    series: xenial
-    num_units: 1
-    options:
-      "admin-password": openstack
-      "admin-token": "admin"
-    annotations:
-      "gui-x": "500"
-      "gui-y": "0"
-  "ceph-radosgw":
-    charm: "cs:~openstack-charmers-next/xenial/ceph-radosgw"
-    series: xenial
-    num_units: 1
-    options:
-      "use-embedded-webserver": true
-    annotations:
-      "gui-x": "1000"
-      "gui-y": "250"
-  "nova-cloud-controller":
-    charm: "cs:~openstack-charmers-next/xenial/nova-cloud-controller"
-    series: xenial
-    num_units: 1
-    options:
-      "network-manager": Neutron
-    annotations:
-      "gui-x": "0"
-      "gui-y": "500"
-  "neutron-api":
-    charm: "cs:~openstack-charmers-next/xenial/neutron-api"
-    series: xenial
-    num_units: 1
-    options:
-      "neutron-security-groups": true
-    annotations:
-      "gui-x": "500"
-      "gui-y": "500"
-  glance:
-    charm: "cs:~openstack-charmers-next/xenial/glance"
-    series: xenial
-    num_units: 1
-    annotations:
-      "gui-x": "250"
-      "gui-y": "0"
   ceph:
-    charm: "cs:~openstack-charmers-next/xenial/ceph"
-    series: xenial
+    annotations:
+      gui-x: '750'
+      gui-y: '500'
+    charm: cs:~openstack-charmers-next/xenial/ceph
     num_units: 3
     options:
-      fsid: "5a791d94-980b-11e4-b6f6-3c970e8b1cf7"
-      "monitor-secret": AQAi5a9UeJXUExAA+By9u+GPhl8/XiUQ4nwI3A==
-      "osd-devices": "/srv/ceph-osd"
+      fsid: 5a791d94-980b-11e4-b6f6-3c970e8b1cf7
+      monitor-secret: AQAi5a9UeJXUExAA+By9u+GPhl8/XiUQ4nwI3A==
+      osd-devices: /srv/ceph-osd
+      use-direct-io: false
+  ceph-osd:
     annotations:
-      "gui-x": "750"
-      "gui-y": "500"
-  "nova-compute":
-    charm: "cs:~openstack-charmers-next/xenial/nova-compute"
-    series: xenial
+      gui-x: '1000'
+      gui-y: '500'
+    charm: cs:~openstack-charmers-next/xenial/ceph-osd
+    num_units: 1
+    options:
+      osd-devices: /srv/ceph-osd
+      osd-reformat: 'yes'
+      use-direct-io: false
+  ceph-radosgw:
+    annotations:
+      gui-x: '1000'
+      gui-y: '250'
+    charm: cs:~openstack-charmers-next/xenial/ceph-radosgw
+    num_units: 1
+    options:
+      use-embedded-webserver: true
+  glance:
+    annotations:
+      gui-x: '250'
+      gui-y: '0'
+    charm: cs:~openstack-charmers-next/xenial/glance
+    num_units: 1
+  keystone:
+    annotations:
+      gui-x: '500'
+      gui-y: '0'
+    charm: cs:~openstack-charmers-next/xenial/keystone
+    num_units: 1
+    options:
+      admin-password: openstack
+  mysql:
+    annotations:
+      gui-x: '0'
+      gui-y: '250'
+    charm: cs:~openstack-charmers-next/xenial/percona-cluster
+    num_units: 1
+    options:
+      max-connections: 20000
+  neutron-api:
+    annotations:
+      gui-x: '500'
+      gui-y: '500'
+    charm: cs:~openstack-charmers-next/xenial/neutron-api
+    num_units: 1
+    options:
+      neutron-security-groups: true
+  neutron-gateway:
+    annotations:
+      gui-x: '0'
+      gui-y: '0'
+    charm: cs:~openstack-charmers-next/xenial/neutron-gateway
+    num_units: 1
+    options:
+      ext-port: eth1
+      instance-mtu: 1456
+  neutron-openvswitch:
+    annotations:
+      gui-x: '250'
+      gui-y: '500'
+    charm: cs:~openstack-charmers-next/xenial/neutron-openvswitch
+    num_units: 0
+  nova-cloud-controller:
+    annotations:
+      gui-x: '0'
+      gui-y: '500'
+    charm: cs:~openstack-charmers-next/xenial/nova-cloud-controller
+    num_units: 1
+    options:
+      network-manager: Neutron
+  nova-compute:
+    annotations:
+      gui-x: '250'
+      gui-y: '250'
+    charm: cs:~openstack-charmers-next/xenial/nova-compute
     num_units: 3
     options:
-      "enable-live-migration": true
-      "enable-resize": true
-      "migration-auth-type": ssh
-      "virt-type": lxd
-    annotations:
-      "gui-x": "250"
-      "gui-y": "250"
-  "ceph-osd":
-    charm: "cs:~openstack-charmers-next/xenial/ceph-osd"
-    series: xenial
-    num_units: 1
-    options:
-      "osd-devices": "/srv/ceph-osd"
-      "osd-reformat": "yes"
-    annotations:
-      "gui-x": "1000"
-      "gui-y": "500"
-  "neutron-gateway":
-    charm: "cs:~openstack-charmers-next/xenial/neutron-gateway"
-    series: xenial
-    num_units: 1
-    options:
-      "ext-port": eth1
-      "instance-mtu": 1456
-    annotations:
-      "gui-x": "0"
-      "gui-y": "0"
-  "neutron-openvswitch":
-    charm: "cs:~openstack-charmers-next/xenial/neutron-openvswitch"
-    series: xenial
-    annotations:
-      "gui-x": "250"
-      "gui-y": "500"
+      enable-live-migration: true
+      enable-resize: true
+      migration-auth-type: ssh
+      virt-type: lxd
   # ntp:
-  #   charm: "cs:~openstack-charmers-next/xenial/ntp"
-  #   series: xenial
   #   annotations:
-  #     "gui-x": "1000"
-  #     "gui-y": "0"
-relations:
-  - - "openstack-dashboard:identity-service"
-    - "keystone:identity-service"
-  - - "keystone:shared-db"
-    - "mysql:shared-db"
-  - - "ceph-osd:mon"
-    - "ceph:osd"
-  - - "neutron-gateway:amqp"
-    - "rabbitmq-server:amqp"
-  - - "nova-cloud-controller:cloud-compute"
-    - "nova-compute:cloud-compute"
-  - - "neutron-openvswitch:neutron-plugin-api"
-    - "neutron-api:neutron-plugin-api"
-  - - "ceph-radosgw:identity-service"
-    - "keystone:identity-service"
-  - - "nova-compute:neutron-plugin"
-    - "neutron-openvswitch:neutron-plugin"
-  - - "neutron-api:amqp"
-    - "rabbitmq-server:amqp"
-  - - "nova-cloud-controller:amqp"
-    - "rabbitmq-server:amqp"
-  - - "nova-cloud-controller:shared-db"
-    - "mysql:shared-db"
-  - - "glance:shared-db"
-    - "mysql:shared-db"
-  - - "nova-cloud-controller:identity-service"
-    - "keystone:identity-service"
-  - - "glance:amqp"
-    - "rabbitmq-server:amqp"
-  - - "neutron-openvswitch:amqp"
-    - "rabbitmq-server:amqp"
-  - - "nova-cloud-controller:image-service"
-    - "glance:image-service"
-  - - "nova-compute:amqp"
-    - "rabbitmq-server:amqp"
-  - - "nova-cloud-controller:neutron-api"
-    - "neutron-api:neutron-api"
-  - - "ceph:client"
-    - "glance:ceph"
-  # - - "ntp:juju-info"
-  #   - "nova-compute:juju-info"
-  - - "neutron-api:identity-service"
-    - "keystone:identity-service"
-  - - "ceph-radosgw:mon"
-    - "ceph:radosgw"
-  # - - "ntp:juju-info"
-  #   - "neutron-gateway:juju-info"
-  - - "nova-compute:image-service"
-    - "glance:image-service"
-  - - "neutron-gateway:neutron-plugin-api"
-    - "neutron-api:neutron-plugin-api"
-  - - "ceph:client"
-    - "nova-compute:ceph"
-  - - "nova-cloud-controller:quantum-network-service"
-    - "neutron-gateway:quantum-network-service"
-  - - "neutron-api:shared-db"
-    - "mysql:shared-db"
-  - - "glance:identity-service"
-    - "keystone:identity-service"
-  - - "nova-compute:lxd"
-    - "lxd:lxd"
+  #     gui-x: '1000'
+  #     gui-y: '0'
+  #   charm: cs:~openstack-charmers-next/ntp
+  #   series: xenial
+  #   num_units: 0
+  openstack-dashboard:
+    annotations:
+      gui-x: '500'
+      gui-y: '-250'
+    charm: cs:~openstack-charmers-next/xenial/openstack-dashboard
+    num_units: 1
+  rabbitmq-server:
+    annotations:
+      gui-x: '500'
+      gui-y: '250'
+    charm: cs:~openstack-charmers-next/xenial/rabbitmq-server
+    num_units: 1
+  lxd:
+    annotations:
+      gui-x: '750'
+      gui-y: '250'
+    charm: cs:~openstack-charmers-next/xenial/lxd
+    num_units: 0
+    options:
+      block-device: /dev/sdb
+      storage-type: lvm
+      overwrite: true

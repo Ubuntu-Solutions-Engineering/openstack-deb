@@ -11,14 +11,11 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     RET=$?
     if [ $RET -ne 0 ]; then
         exposeResult "(post-bootstrap) Failed to udate lxd profile" $RET "false"
-        exit 0
     else
         exposeResult "(post-bootstrap) Complete" 0 "true"
-        exit 0
     fi
 else
     debug openstack "(post-bootstrap) unknown provider type $JUJU_PROVIDERTYPE"
 
     exposeResult "Unknown provider type" 1 "false"
-    exit 0
 fi

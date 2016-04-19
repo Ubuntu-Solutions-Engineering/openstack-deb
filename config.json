@@ -7,15 +7,17 @@
     "bundles": [{
         "key": "openstack-base",
         "name": "OpenStack",
-        "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute, Network, Block Storage, Object Storage, Identity and Image services.",
+        "summary": "This bundle deploys a basic OpenStack Cloud (Mitaka release) on Ubuntu 16.04 LTS, providing Dashboard, Compute, Network, Block Storage, Object Storage, Identity and Image services.",
         "recommendedCharms": ["glance-simplestreams-sync"],
-        "whitelist": ["maas", "lxd", "localhost"]
+        "bundleSeries": "xenial",
+        "whitelist": ["maas", "lxd", "localhost"],
+        "location": "~openstack-charmers-next/openstack-base-xenial-mitaka"
     },{
         "key": "openstack-lxd",
         "name": "OpenStack with Nova-LXD",
-        "summary": "This bundle deploys a basic OpenStack Cloud, providing Dashboard, Compute via LXD containers, Network, Block Storage, Object Storage, Identity and Image services.",
         "whitelist": ["maas", "lxd", "localhost"],
         "bootstrapSeries": "xenial",
+        "summary": "This bundle deploys an OpenStack Cloud (Mitaka release), configured to use LXD (the lightweight container hypervisor), on Ubuntu 16.04, providing Dashboard, Compute, Network, Object Storage, Identity and Image services.",
         "location": "/usr/share/openstack/bundles/openstack-lxd/bundle.yaml"
     }, {
         "key": "landscape-dense-maas",
