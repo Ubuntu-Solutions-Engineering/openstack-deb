@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . /usr/share/conjure-up/hooklib/common.sh
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
@@ -13,8 +15,6 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
         exposeResult "(pre) Complete" 0 "true"
     fi
 
-else
-    debug openstack "(pre) unknown provider type $JUJU_PROVIDERTYPE"
-
-    exposeResult "Unknown provider type" 1 "false"
 fi
+debug openstack "(pre) unknown provider type $JUJU_PROVIDERTYPE"
+exposeResult "Unknown provider type" 1 "false"

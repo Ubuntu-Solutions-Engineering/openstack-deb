@@ -1,5 +1,3 @@
-#!/bin/bash
-
 . /usr/share/conjure-up/hooklib/common.sh
 
 fail_cleanly() {
