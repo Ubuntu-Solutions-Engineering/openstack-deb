@@ -3,6 +3,11 @@
 . /usr/share/conjure-up/hooklib/common.sh
 . $SCRIPTPATH/../bundle-common.sh
 
+keystone_status=$(unitStatus keystone 0)
+if [ $keystone_status != "active" ]; then
+    exposeResult "Waiting for Keystone..." 1 "false"
+fi
+
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     debug openstack "(post) setting credentials"
 

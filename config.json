@@ -18,7 +18,8 @@
         "whitelist": ["maas", "lxd", "localhost"],
         "bootstrapSeries": "xenial",
         "summary": "This bundle deploys an OpenStack Cloud (Mitaka release), configured to use LXD (the lightweight container hypervisor), on Ubuntu 16.04, providing Dashboard, Compute, Network, Object Storage, Identity and Image services.",
-        "location": "/usr/share/openstack/bundles/openstack-lxd/bundle.yaml"
+        "location": "/usr/share/openstack/bundles/openstack-lxd/bundle.yaml",
+        "recommendedCharms": ["glance-simplestreams-sync"]
     }, {
         "key": "landscape-dense-maas",
         "name": "OpenStack Autopilot",
