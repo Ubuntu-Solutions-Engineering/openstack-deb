@@ -10,7 +10,12 @@ Vcs-Git: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb.git
 
 Package: openstack
 Architecture: all
-Depends: conjure-up, python3, python3-neutronclient, ${misc:Depends}
+Depends: conjure-up,
+         python3,
+         python3-glanceclient,
+         python3-neutronclient,
+         python3-openstackclient,
+         ${misc:Depends}
 Description: Ubuntu OpenStack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to
  install, deploy and scale an OpenStack cloud on top of Ubuntu server

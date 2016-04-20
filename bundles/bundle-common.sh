@@ -43,7 +43,7 @@ config_neutron() {
     if [ $RET -ne 0 ]; then
         fail_cleanly "Neutron unable to create external router..."
     fi
-    neutron subnet-show ext-subnet || neutron subnet-create ext-net 10.99.0.0/24 \
+    neutron subnet-show ext-subnet || neutron subnet-create --name ext-subnet ext-net 10.99.0.0/24 \
                                               --gateway 10.99.0.1 \
                                               --allocation-pool start=10.99.0.2,end=10.99.0.254 2> /dev/null
     RET=$?
@@ -57,7 +57,9 @@ config_neutron() {
         fail_cleanly "Neutron unable to create network..."
     fi
 
-    neutron subnet-show ubuntu-subnet || neutron subnet-create --name ubuntu-subnet --gateway 10.101.0.1 --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24 2> /dev/null
+    neutron subnet-show ubuntu-subnet || neutron subnet-create --name ubuntu-subnet \
+                                                 --gateway 10.101.0.1 \
+                                                 --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
         fail_cleanly "Neutron unable to create subnet..."
