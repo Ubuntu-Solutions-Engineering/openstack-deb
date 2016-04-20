@@ -181,6 +181,4 @@ services:
     charm: cs:~openstack-charmers-next/xenial/lxd
     num_units: 0
     options:
-      block-device: /srv/lxd.img|40G
-      storage-type: lvm
-      overwrite: true
+      block-device: none

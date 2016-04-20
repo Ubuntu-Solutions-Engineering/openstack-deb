@@ -1,7 +1,7 @@
 . /usr/share/conjure-up/hooklib/common.sh
 
 fail_cleanly() {
-    exposeResult "$1" 0 "false"
+    exposeResult "$1" 1 "false"
     exit 0
 }
 
@@ -41,44 +41,44 @@ config_neutron() {
     neutron net-create --router:external ext-net 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
     neutron subnet-create ext-net 10.99.0.0/24 \
             --gateway 10.99.0.1 \
             --allocation-pool start=10.99.0.2,end=10.99.0.254 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron net-create ubuntu-net --shared
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron subnet-create --name ubuntu-subnet --gateway 10.101.0.1 --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron router-create ubuntu-router 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron router-interface-add ubuntu-router ubuntu-subnet 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron router-gateway-set ubuntu-router ext-net 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     # create pool of at least 5 floating ips
@@ -93,13 +93,13 @@ config_neutron() {
     neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol icmp --remote-ip-prefix 0.0.0.0/0 default 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
     neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 --remote-ip-prefix 0.0.0.0/0 default 2> /dev/null
     RET=$?
     if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) neutron not configurable yet..." 1 "false"
+        fail_cleanly "(post) neutron not configurable yet..."
     fi
 
 }
