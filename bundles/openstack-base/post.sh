@@ -13,7 +13,7 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     config_neutron
 fi
 
-dashboard_address=$(unitAddress openstask-dashboard 0)
+dashboard_address=$(unitAddress openstack-dashboard 0)
 if [ $dashboard_address != "null" ]; then
     exposeResult "Login to Horizon: http://$dashboard_address/horizon l: admin p: openstack" 0 "true"
 else
