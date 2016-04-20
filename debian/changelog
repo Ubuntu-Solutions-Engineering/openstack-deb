@@ -1,6 +1,7 @@
-openstack (1.0.5) UNRELEASED; urgency=medium
+openstack (1.0.5) xenial-proposed; urgency=medium
 
-  * Next dev
+  * Update dependency for conjure-up
+  * Add entry for OpenStack with Nova LXD on Mitaka
 
  -- Adam Stokes <adam.stokes@ubuntu.com>  Thu, 14 Apr 2016 16:04:25 -0400
 
