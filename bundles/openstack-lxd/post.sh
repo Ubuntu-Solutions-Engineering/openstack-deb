@@ -8,15 +8,6 @@ if [ $keystone_status != "active" ]; then
     exposeResult "Waiting for Keystone..." 1 "false"
 fi
 
-# if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
-#     debug openstack "(post) setting credentials"
-
-#     . $SCRIPTPATH/novarc
-
-#     debug openstack "(post) configuring neutron"
-#     config_neutron
-# fi
-
 dashboard_address=$(unitAddress openstack-dashboard 0)
 if [ $dashboard_address != "null" ]; then
     exposeResult "Login to Horizon: http://$dashboard_address/horizon l: admin p: openstack" 0 "true"
