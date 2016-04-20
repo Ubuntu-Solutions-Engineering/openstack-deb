@@ -1,3 +1,11 @@
+openstack (1.0.6) xenial-proposed; urgency=medium
+
+  * Fix openstack-lxd bundle to support nova-lxd's block-device
+  * Add 'turnkey' script for importing glance images, setting ssh
+    keypairs, and defining a default neutron network
+
+ -- Adam Stokes <adam.stokes@ubuntu.com>  Wed, 20 Apr 2016 11:39:15 -0400
+
 openstack (1.0.5) xenial-proposed; urgency=medium
 
   * Update dependency for conjure-up

@@ -8,24 +8,33 @@ if [ $keystone_status != "active" ]; then
     exposeResult "Waiting for Keystone..." 1 "false"
 fi
 
+keystone_address=$(unitAddress keystone 0)
+
 glance_status=$(unitStatus glance 0)
 if [ $glance_status != "active" ]; then
     exposeResult "Waiting for Glance..." 1 "false"
 else
     debug openstack "(post) importing images for glance"
-    mkdir -p ~/glance-images
-    wget -qO ~/images/trusty-server-cloudimg-amd64-disk1.img  http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
-    wget -qO ~/images/xenial-server-cloudimg-amd64-disk1.img  http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+    mkdir -p $HOME/glance-images || true
+    if [ ! -f $HOME/glance-images/xenial-server-cloudimg-amd64-disk1.img ]; then
+        wget -qO ~/glance-images/xenial-server-cloudimg-amd64-disk1.img http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+    fi
+    if [ ! -f $HOME/glance-images/trusty-server-cloudimg-amd64-disk1.img ]; then
+        wget -qO ~/glance-images/trusty-server-cloudimg-amd64-disk1.img http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+    fi
+
+    . $SCRIPTPATH/novarc
+    debug openstack "Connecting to keystone $keystone_address"
     glance image-create --name="trusty" \
            --container-format=bare \
            --disk-format=root-tar \
            --property architecture="x86_64" \
-           --visibility=public < ~/images/trusty-server-cloudimg-amd64-disk1.img 2> /dev/null
+           --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-disk1.img >> /dev/null 2>&1
     glance image-create --name="xenial" \
            --container-format=bare \
            --disk-format=root-tar \
            --property architecture="x86_64" \
-           --visibility=public < ~/images/xenial-server-cloudimg-amd64-disk1.img 2> /dev/null
+           --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-disk1.img >> /dev/null 2>&1
 fi
 
 
@@ -41,7 +50,7 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
         debug openstack "(post) Error attempting add $HOME/.ssh/id_rsa.pub to OpenStack, maybe it still need to be created with ssh-keygen?"
     fi
-    openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair || true
+    openstack keypair show ubuntu-keypair >> /dev/null || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
 fi
 
 dashboard_address=$(unitAddress openstack-dashboard 0)
