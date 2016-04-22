@@ -3,6 +3,13 @@
 . /usr/share/conjure-up/hooklib/common.sh
 . $SCRIPTPATH/../bundle-common.sh
 
+exposeError() {
+    local parent_lineno="$1"
+    exposeResult  "Error on or near line ${parent_lineno}, maybe in ${BASH_SOURCE}" 1 "false"
+    exit 0
+}
+trap 'exposeError ${LINENO} ${BASH_SOURCE}' ERR
+
 keystone_status=$(unitStatus keystone 0)
 if [ $keystone_status != "active" ]; then
     exposeResult "Waiting for Keystone..." 1 "false"
