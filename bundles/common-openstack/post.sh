@@ -43,14 +43,14 @@ else
 
     . $SCRIPTPATH/novarc
     debug openstack "Connecting to keystone $keystone_address"
-    if ! glance image-list --property-filter name=trusty | grep -q trusty ; then
+    if ! glance image-list --property-filter name="trusty$imagesuffix" | grep -q "trusty$imagesuffix" ; then
         glance image-create --name="trusty$imagesuffix" \
                --container-format=bare \
                --disk-format=$diskformat \
                --property architecture="x86_64" \
                --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype >> /dev/null 2>&1
     fi
-    if ! glance image-list --property-filter name=xenial | grep -q xenial ; then
+    if ! glance image-list --property-filter name="xenial$imagesuffix" | grep -q "xenial$imagesuffix" ; then
         glance image-create --name="xenial$imagesuffix" \
                --container-format=bare \
                --disk-format=$diskformat \
@@ -72,7 +72,7 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
         debug openstack "(post) Error attempting add $HOME/.ssh/id_rsa.pub to OpenStack, maybe it still need to be created with ssh-keygen?"
     fi
-    openstack keypair show ubuntu-keypair >> /dev/null || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
+    openstack keypair show ubuntu-keypair > /dev/null 2>&1 || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
 fi
 
 dashboard_address=$(unitAddress openstack-dashboard 0)
