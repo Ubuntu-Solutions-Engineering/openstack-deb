@@ -22,26 +22,41 @@ if [ $glance_status != "active" ]; then
     exposeResult "Waiting for Glance..." 1 "false"
 else
     debug openstack "(post) importing images for glance"
-    mkdir -p $HOME/glance-images || true
-    if [ ! -f $HOME/glance-images/xenial-server-cloudimg-amd64-disk1.img ]; then
-        wget -qO ~/glance-images/xenial-server-cloudimg-amd64-disk1.img http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+
+    if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
+        imagetype=root.tar.gz
+        diskformat=raw
+        imagesuffix="-lxd"
+    else
+        imagetype=disk1.img
+        diskformat=root-tar
+        imagesuffix=""
     fi
-    if [ ! -f $HOME/glance-images/trusty-server-cloudimg-amd64-disk1.img ]; then
-        wget -qO ~/glance-images/trusty-server-cloudimg-amd64-disk1.img http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+
+    mkdir -p $HOME/glance-images || true
+    if [ ! -f $HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype ]; then
+        wget -qO ~/glance-images/xenial-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-$imagetype
+    fi
+    if [ ! -f $HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype ]; then
+        wget -qO ~/glance-images/trusty-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-$imagetype
     fi
 
     . $SCRIPTPATH/novarc
     debug openstack "Connecting to keystone $keystone_address"
-    glance image-create --name="trusty" \
-           --container-format=bare \
-           --disk-format=root-tar \
-           --property architecture="x86_64" \
-           --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-disk1.img >> /dev/null 2>&1
-    glance image-create --name="xenial" \
-           --container-format=bare \
-           --disk-format=root-tar \
-           --property architecture="x86_64" \
-           --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-disk1.img >> /dev/null 2>&1
+    if ! glance image-list --property-filter name=trusty | grep -q trusty ; then
+        glance image-create --name="trusty$imagesuffix" \
+               --container-format=bare \
+               --disk-format=$diskformat \
+               --property architecture="x86_64" \
+               --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype >> /dev/null 2>&1
+    fi
+    if ! glance image-list --property-filter name=xenial | grep -q xenial ; then
+        glance image-create --name="xenial$imagesuffix" \
+               --container-format=bare \
+               --disk-format=$diskformat \
+               --property architecture="x86_64" \
+               --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype >> /dev/null 2>&1
+    fi
 fi
 
 
