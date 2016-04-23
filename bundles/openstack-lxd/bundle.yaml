@@ -49,10 +49,6 @@ relations:
   - glance:ceph
 - - ceph-osd:mon
   - ceph:osd
-# - - ntp:juju-info
-#   - nova-compute:juju-info
-# - - ntp:juju-info
-#   - neutron-gateway:juju-info
 - - ceph-radosgw:mon
   - ceph:radosgw
 - - ceph-radosgw:identity-service
@@ -108,8 +104,8 @@ services:
     annotations:
       gui-x: '0'
       gui-y: '250'
-    # charm: cs:~openstack-charmers-next/xenial/percona-cluster
-    charm: cs:~james-page/xenial/percona-cluster
+    charm: cs:~openstack-charmers-next/xenial/percona-cluster
+    # charm: cs:~james-page/xenial/percona-cluster
     num_units: 1
     options:
       max-connections: 20000
@@ -144,24 +140,18 @@ services:
     num_units: 1
     options:
       network-manager: Neutron
+      console-access-protocol: novnc
   nova-compute:
     annotations:
       gui-x: '250'
       gui-y: '250'
     charm: cs:~openstack-charmers-next/xenial/nova-compute
-    num_units: 3
+    num_units: 1
     options:
       enable-live-migration: true
       enable-resize: true
       migration-auth-type: ssh
       virt-type: lxd
-  # ntp:
-  #   annotations:
-  #     gui-x: '1000'
-  #     gui-y: '0'
-  #   charm: cs:~openstack-charmers-next/ntp
-  #   series: xenial
-  #   num_units: 0
   openstack-dashboard:
     annotations:
       gui-x: '500'
