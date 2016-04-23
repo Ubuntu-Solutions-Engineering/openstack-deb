@@ -4,36 +4,6 @@ fail_cleanly() {
     exposeResult "$1" 1 "false"
 }
 
-# CEPH
-# Configures ceph properties, mainly useful for LXD
-config_ceph() {
-    debug openstack "(post) setting ceph properties"
-
-    juju set-config ceph use-direct-io=false 2> /dev/null
-    RET=$?
-    if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) could not set ceph use-direct-io"
-    fi
-
-    juju set-config ceph-osd use-direct-io=false 2> /dev/null
-    RET=$?
-    if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) could not set ceph-osd use-direct-io"
-    fi
-
-    juju set-config ceph-osd osd-devices=/opt/ceph-osd 2> /dev/null
-    RET=$?
-    if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) could not set ceph-osd osd-devices"
-    fi
-
-    juju set-config ceph osd-devices=/opt/ceph-osd 2> /dev/null
-    RET=$?
-    if [ $RET -ne 0 ]; then
-        fail_cleanly "(post) could not set ceph osd-devices"
-    fi
-}
-
 # NEUTRON
 # Configures neutron
 config_neutron() {
