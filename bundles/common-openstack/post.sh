@@ -66,12 +66,22 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     . $SCRIPTPATH/novarc
 
     debug openstack "(post) configuring neutron"
+    if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
+        debug openstack "failed to pull dhcp eth1 on nova-cloud-controller"
+    fi
+    if ! juju run --unit nova-compute/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
+        debug openstack "failed to pull dhcp nova-compute"
+    fi
     config_neutron
 
-    debug openstack "(post) adding keypair"
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
-        debug openstack "(post) Error attempting add $HOME/.ssh/id_rsa.pub to OpenStack, maybe it still need to be created with ssh-keygen?"
+        debug openstack "(post) adding keypair"
+        if ! ssh-keygen -N '' -f $HOME/.ssh/id_rsa; then
+            debug openstack "(post) Error attempting to create $HOME/.ssh/id_rsa.pub to be added OpenStack"
+        fi
+
     fi
+
     openstack keypair show ubuntu-keypair > /dev/null 2>&1 || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
 fi
 
