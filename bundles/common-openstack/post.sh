@@ -66,6 +66,12 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     . $SCRIPTPATH/novarc
 
     debug openstack "(post) configuring neutron"
+    if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
+        debug openstack "failed to pull dhcp eth1 on nova-cloud-controller"
+    fi
+    if ! juju run --unit nova-compute/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
+        debug openstack "failed to pull dhcp nova-compute"
+    fi
     config_neutron
     if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
         debug openstack "(post) unable to configure bridge on controller"
@@ -78,6 +84,7 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
         fi
 
     fi
+
     openstack keypair show ubuntu-keypair > /dev/null 2>&1 || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
 fi
 
