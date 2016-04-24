@@ -1,9 +1,7 @@
 #!/bin/sh
 
-# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-# iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
-# iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
 
+ifdown eth1 || true
 
 (
     cat <<EOF
@@ -12,5 +10,13 @@ auto eth1
 iface eth1 inet dhcp
 EOF
 ) > /etc/network/interfaces.d/99-eth1.cfg
+
+echo "1" | tee /proc/sys/net/ipv4/ip_forward
+
+# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+# iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
+
+ifup eth1 || true
 
 exit 0

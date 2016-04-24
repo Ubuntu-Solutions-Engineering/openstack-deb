@@ -61,20 +61,23 @@ fi
 
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
-    debug openstack "(post) setting credentials"
 
-    . $SCRIPTPATH/novarc
+    neutron_status=$(unitStatus neutron-gateway 0)
+    if [ $neutron_status != "active" ]; then
+        exposeResult "Waiting for Neutron..." 1 "false"
+    else
+        . $SCRIPTPATH/novarc
 
-    debug openstack "(post) configuring neutron"
-    if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
-        debug openstack "failed to pull dhcp eth1 on nova-cloud-controller"
-    fi
-    if ! juju run --unit nova-compute/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
-        debug openstack "failed to pull dhcp nova-compute"
-    fi
-    config_neutron
-    if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
-        debug openstack "(post) unable to configure bridge on controller"
+        debug openstack "(post) copying network config to neutron gateway"
+
+        if juju scp $SCRIPTPATH/network-setup.sh neutron-gateway/0:; then
+            if ! juju run --unit neutron-gateway/0 -- "sudo ./network-setup.sh"; then
+                debug openstack "(post) unable to run script on gateway"
+            fi
+        fi
+
+        debug openstack "(post) configuring neutron"
+        config_neutron
     fi
 
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
