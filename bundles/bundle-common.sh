@@ -17,7 +17,7 @@ config_neutron() {
     if ! neutron subnet-show ext-subnet > /dev/null 2>&1; then
         debug openstack "adding ext-subnet"
         if ! neutron subnet-create --name ext-subnet ext-net 10.99.0.0/24 \
-             --gateway 10.99.0.1 \
+             --gateway 10.99.0.1 --disable-dhcp \
              --allocation-pool start=10.99.0.2,end=10.99.0.254 > /dev/null 2>&1; then
             fail_cleanly "Neutron unable to create external subnet..."
         fi

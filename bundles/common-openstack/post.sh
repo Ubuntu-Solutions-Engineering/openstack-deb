@@ -48,14 +48,14 @@ else
                --container-format=bare \
                --disk-format=$diskformat \
                --property architecture="x86_64" \
-               --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype >> /dev/null 2>&1
+               --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype > /dev/null 2>&1
     fi
     if ! glance image-list --property-filter name="xenial$imagesuffix" | grep -q "xenial$imagesuffix" ; then
         glance image-create --name="xenial$imagesuffix" \
                --container-format=bare \
                --disk-format=$diskformat \
                --property architecture="x86_64" \
-               --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype >> /dev/null 2>&1
+               --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype > /dev/null 2>&1
     fi
 fi
 
@@ -67,10 +67,16 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
 
     debug openstack "(post) configuring neutron"
     config_neutron
+    if ! juju run --unit nova-cloud-controller/0 -- "sudo dhclient eth1" >/dev/null 2>&1; then
+        debug openstack "(post) unable to configure bridge on controller"
+    fi
 
-    debug openstack "(post) adding keypair"
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
-        debug openstack "(post) Error attempting add $HOME/.ssh/id_rsa.pub to OpenStack, maybe it still need to be created with ssh-keygen?"
+        debug openstack "(post) adding keypair"
+        if ! ssh-keygen -N '' -f $HOME/.ssh/id_rsa; then
+            debug openstack "(post) Error attempting to create $HOME/.ssh/id_rsa.pub to be added OpenStack"
+        fi
+
     fi
     openstack keypair show ubuntu-keypair > /dev/null 2>&1 || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
 fi

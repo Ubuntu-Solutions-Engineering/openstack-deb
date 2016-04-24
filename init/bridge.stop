@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ip link set dev openstack0 down
+brctl delbr openstack0

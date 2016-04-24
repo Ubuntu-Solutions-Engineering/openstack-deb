@@ -2,7 +2,7 @@ Source: openstack
 Section: admin
 Priority: extra
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-Build-Depends: conjure-up, debhelper (>= 9)
+Build-Depends: conjure-up, debhelper (>= 9), dh-systemd
 Standards-Version: 3.9.7
 Homepage: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
 Vcs-Browser: https://github.com/Ubuntu-Solutions-Engineering/openstack-deb
@@ -15,6 +15,7 @@ Depends: conjure-up,
          python3-glanceclient,
          python3-neutronclient,
          python3-openstackclient,
+         bridge-utils,
          ${misc:Depends}
 Description: Ubuntu OpenStack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to
