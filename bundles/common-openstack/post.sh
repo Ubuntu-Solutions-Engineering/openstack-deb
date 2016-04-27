@@ -62,24 +62,6 @@ fi
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
 
-    neutron_status=$(unitStatus neutron-gateway 0)
-    if [ $neutron_status != "active" ]; then
-        exposeResult "Waiting for Neutron..." 1 "false"
-    else
-        . $SCRIPTPATH/novarc
-
-        debug openstack "(post) copying network config to neutron gateway"
-
-        if juju scp $SCRIPTPATH/network-setup.sh neutron-gateway/0:; then
-            if ! juju run --unit neutron-gateway/0 -- "sudo ./network-setup.sh"; then
-                debug openstack "(post) unable to run script on gateway"
-            fi
-        fi
-
-        debug openstack "(post) configuring neutron"
-        config_neutron
-    fi
-
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
         debug openstack "(post) adding keypair"
         if ! ssh-keygen -N '' -f $HOME/.ssh/id_rsa; then
@@ -87,8 +69,12 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
         fi
 
     fi
-
-    openstack keypair show ubuntu-keypair > /dev/null 2>&1 || openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair
+    . $SCRIPTPATH/novarc
+    if ! openstack keypair show ubuntu-keypair > /dev/null 2>&1; then
+        if ! openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair; then
+            debug openstack "(post) failed to add ssh key"
+        fi
+    fi
 fi
 
 dashboard_address=$(unitAddress openstack-dashboard 0)

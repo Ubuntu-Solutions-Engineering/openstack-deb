@@ -1,5 +1,6 @@
 bundles usr/share/openstack
-init usr/share/openstack
+init/bridge.start usr/lib/openstack
+init/bridge.stop usr/lib/openstack
 config.json usr/share/openstack
 metadata.json usr/share/openstack
 openstack-rsyslog.conf usr/share/openstack

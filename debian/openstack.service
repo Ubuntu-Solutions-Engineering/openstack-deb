@@ -6,8 +6,8 @@ After=network-online.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/share/openstack/init/bridge.start
-ExecStop=/usr/share/openstack/init/bridge.stop
+ExecStart=/usr/lib/openstack/bridge.start
+ExecStop=/usr/lib/openstack/bridge.stop
 
 [Install]
 WantedBy=multi-user.target
