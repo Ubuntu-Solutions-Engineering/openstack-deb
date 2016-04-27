@@ -62,6 +62,7 @@ fi
 
 if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
 
+    config_neutron
     if [ ! -f $HOME/.ssh/id_rsa.pub ]; then
         debug openstack "(post) adding keypair"
         if ! ssh-keygen -N '' -f $HOME/.ssh/id_rsa; then
@@ -71,8 +72,8 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     fi
     . $SCRIPTPATH/novarc
     if ! openstack keypair show ubuntu-keypair > /dev/null 2>&1; then
-        if ! openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair; then
-            debug openstack "(post) failed to add ssh key"
+        if ! openstack keypair create --public-key $HOME/.ssh/id_rsa.pub ubuntu-keypair > /dev/null 2>&1; then
+            exposeResult "Adding SSH Keypair..." 1 "false"
         fi
     fi
 fi
