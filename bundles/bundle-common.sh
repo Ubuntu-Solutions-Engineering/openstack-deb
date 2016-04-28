@@ -15,7 +15,7 @@ config_neutron() {
     if ! neutron net-show ext-net > /dev/null 2>&1; then
         debug openstack "adding ext-net"
         if ! neutron net-create --router:external ext-net > /dev/null 2>&1; then
-            fail_cleanly "Neutron unable to create external router..."
+            fail_cleanly "Neutron not ready yet..."
         fi
     fi
 
@@ -24,14 +24,14 @@ config_neutron() {
         if ! neutron subnet-create --name ext-subnet ext-net 10.99.0.0/24 \
              --gateway 10.99.0.1 --disable-dhcp \
              --allocation-pool start=10.99.0.3,end=10.99.0.254 > /dev/null 2>&1; then
-            fail_cleanly "Neutron unable to create external subnet..."
+            fail_cleanly "Neutron not ready yet..."
         fi
     fi
 
     if ! neutron net-show ubuntu-net > /dev/null 2>&1; then
         debug openstack "adding ubuntu-net"
         if ! neutron net-create ubuntu-net --shared > /dev/null 2>&1; then
-            fail_cleanly "Neutron unable to create network..."
+            fail_cleanly "Neutron not ready yet..."
         fi
     fi
 
@@ -40,24 +40,24 @@ config_neutron() {
         if ! neutron subnet-create --name ubuntu-subnet \
              --gateway 10.101.0.1 \
              --dns-nameserver $(get_host_ns) ubuntu-net 10.101.0.0/24 > /dev/null 2>&1; then
-            fail_cleanly "Neutron unable to create subnet..."
+            fail_cleanly "Neutron not ready yet..."
         fi
     fi
 
     if ! neutron router-show ubuntu-router > /dev/null 2>&1; then
         debug openstack "adding ubuntu-router"
         if ! neutron router-create ubuntu-router > /dev/null 2>&1; then
-            fail_cleanly "Neutron unable to create router..."
+            fail_cleanly "Neutron not ready yet..."
         fi
     fi
 
     if ! neutron router-interface-add ubuntu-router ubuntu-subnet > /dev/null 2>&1; then
-        debug openstack "Neutron router interface already exists..."
+        debug openstack "Neutron not ready yet..."
     fi
 
     debug openstack "setting router gateway"
     if ! neutron router-gateway-set ubuntu-router ext-net > /dev/null 2>&1; then
-        debug openstack "Neutron gateway to ubuntu-router already exists..."
+        debug openstack "Neutron not ready yet..."
     fi
 
     # create pool of at least 5 floating ips
