@@ -53,28 +53,34 @@ relations:
   - nova-cloud-controller:cinder-volume-service
 - - cinder-ceph:storage-backend
   - cinder:storage-backend
-- - ceph:client
+- - ceph-mon:client
   - nova-compute:ceph
 - - cinder:shared-db
   - mysql:shared-db
-- - ceph:client
+- - ceph-mon:client
   - cinder-ceph:ceph
-- - ceph:client
+- - ceph-mon:client
   - glance:ceph
 - - ceph-radosgw:mon
-  - ceph:radosgw
+  - ceph-mon:radosgw
+- - ceph-osd:mon
+  - ceph-mon:osd
 - - ceph-radosgw:identity-service
   - keystone:identity-service
 - - nova-compute:lxd
   - lxd:lxd
 series: xenial
 services:
-  ceph:
-    charm: cs:xenial/ceph
+  ceph-mon:
+    charm: cs:xenial/ceph-mon
     num_units: 3
     options:
       fsid: 5a791d94-980b-11e4-b6f6-3c970e8b1cf7
       monitor-secret: AQAi5a9UeJXUExAA+By9u+GPhl8/XiUQ4nwI3A==
+  ceph-osd:
+    charm: cs:xenial/ceph-osd
+    num_units: 3
+    options:
       osd-devices: /srv/osd
       use-direct-io: False
   ceph-radosgw:
