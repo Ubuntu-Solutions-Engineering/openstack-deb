@@ -4,6 +4,11 @@ fail_cleanly() {
     exposeResult "$1" 1 "false"
 }
 
+# Get host namserver
+get_host_ns() {
+    perl -lne 's/^nameserver\s+// or next; s/\s.*//; print' /etc/resolv.conf
+}
+
 # NEUTRON
 # Configures neutron
 config_neutron() {
@@ -34,7 +39,7 @@ config_neutron() {
         debug openstack "adding ubuntu-subnet"
         if ! neutron subnet-create --name ubuntu-subnet \
              --gateway 10.101.0.1 \
-             --dns-nameserver 10.99.0.1 ubuntu-net 10.101.0.0/24 > /dev/null 2>&1; then
+             --dns-nameserver $(get_host_ns) ubuntu-net 10.101.0.0/24 > /dev/null 2>&1; then
             fail_cleanly "Neutron unable to create subnet..."
         fi
     fi
