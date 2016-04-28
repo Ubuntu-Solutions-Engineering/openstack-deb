@@ -15,7 +15,6 @@ Depends: conjure-up,
          python3-glanceclient,
          python3-neutronclient,
          python3-openstackclient,
-         bridge-utils,
          ${misc:Depends}
 Description: Ubuntu OpenStack Installer
  Ubuntu OpenStack Installer provides an extremely simple way to

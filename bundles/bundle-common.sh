@@ -18,7 +18,7 @@ config_neutron() {
         debug openstack "adding ext-subnet"
         if ! neutron subnet-create --name ext-subnet ext-net 10.99.0.0/24 \
              --gateway 10.99.0.1 --disable-dhcp \
-             --allocation-pool start=10.99.0.200,end=10.99.0.254 > /dev/null 2>&1; then
+             --allocation-pool start=10.99.0.3,end=10.99.0.254 > /dev/null 2>&1; then
             fail_cleanly "Neutron unable to create external subnet..."
         fi
     fi
@@ -58,7 +58,7 @@ config_neutron() {
     # create pool of at least 5 floating ips
     debug openstack "creating floating ips"
     existingips=$(neutron floatingip-list -f csv | tail -n +2| wc -l)
-    to_create=$((54 - existingips))
+    to_create=$((50 - existingips))
     i=0
     while [ $i -ne $to_create ]; do
         neutron floatingip-create ext-net > /dev/null 2>&1
