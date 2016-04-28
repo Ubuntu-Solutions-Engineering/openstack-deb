@@ -47,8 +47,6 @@ relations:
   - nova-compute:ceph
 - - ceph:client
   - glance:ceph
-- - ceph-osd:mon
-  - ceph:osd
 - - ceph-radosgw:mon
   - ceph:radosgw
 - - ceph-radosgw:identity-service
@@ -67,16 +65,6 @@ services:
       fsid: 5a791d94-980b-11e4-b6f6-3c970e8b1cf7
       monitor-secret: AQAi5a9UeJXUExAA+By9u+GPhl8/XiUQ4nwI3A==
       osd-devices: /srv/ceph-osd
-      use-direct-io: false
-  ceph-osd:
-    annotations:
-      gui-x: '1000'
-      gui-y: '500'
-    charm: cs:~openstack-charmers-next/xenial/ceph-osd
-    num_units: 1
-    options:
-      osd-devices: /srv/ceph-osd
-      osd-reformat: 'yes'
       use-direct-io: false
   ceph-radosgw:
     annotations:
