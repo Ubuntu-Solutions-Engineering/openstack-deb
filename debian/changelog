@@ -1,6 +1,14 @@
-openstack (1.0.7) UNRELEASED; urgency=medium
+openstack (1.0.8) UNRELEASED; urgency=medium
 
   * Next dev release
+
+ -- Adam Stokes <adam.stokes@ubuntu.com>  Fri, 29 Apr 2016 19:55:27 -0400
+
+openstack (1.0.7.16.10.1) yakkety; urgency=medium
+
+  * Fixes post processing neutron fails to configure network (LP: #1575800)
+  * Fixes post processing fails to add ssh keypair (LP: #1575906)
+  * Fixes package does not use released charms (LP: #1576412)
 
  -- Michael McCracken <mike.mccracken@canonical.com>  Fri, 22 Apr 2016 14:50:00 -0700
 
