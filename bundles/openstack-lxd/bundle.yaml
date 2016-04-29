@@ -140,7 +140,7 @@ services:
   lxd:
     charm: cs:xenial/lxd
     options:
-      block-device: None
+      block-devices: None
   openstack-dashboard:
     charm: cs:xenial/openstack-dashboard
     num_units: 1
