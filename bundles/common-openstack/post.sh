@@ -24,7 +24,7 @@ else
     debug openstack "(post) importing images for glance"
 
     if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
-        imagetype=root.tar.gz
+        imagetype=root.tar.xz
         diskformat=raw
         imagesuffix="-lxd"
     else
@@ -36,11 +36,11 @@ else
     mkdir -p $HOME/glance-images || true
     if [ ! -f $HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype ]; then
         debug openstack "(post) downloading xenial image..."
-        wget -qO ~/glance-images/xenial-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-$imagetype
+        wget -qO ~/glance-images/xenial-server-cloudimg-amd64-$imagetype https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-$imagetype
     fi
     if [ ! -f $HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype ]; then
         debug openstack "(post) downloading trusty image..."
-        wget -qO ~/glance-images/trusty-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-$imagetype
+        wget -qO ~/glance-images/trusty-server-cloudimg-amd64-$imagetype https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-$imagetype
     fi
 
     . $SCRIPTPATH/novarc
