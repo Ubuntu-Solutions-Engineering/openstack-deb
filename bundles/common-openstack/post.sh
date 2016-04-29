@@ -35,27 +35,34 @@ else
 
     mkdir -p $HOME/glance-images || true
     if [ ! -f $HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype ]; then
+        debug openstack "(post) downloading xenial image..."
         wget -qO ~/glance-images/xenial-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-$imagetype
     fi
     if [ ! -f $HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype ]; then
+        debug openstack "(post) downloading trusty image..."
         wget -qO ~/glance-images/trusty-server-cloudimg-amd64-$imagetype http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-$imagetype
     fi
 
     . $SCRIPTPATH/novarc
-    debug openstack "Connecting to keystone $keystone_address"
     if ! glance image-list --property-filter name="trusty$imagesuffix" | grep -q "trusty$imagesuffix" ; then
-        glance image-create --name="trusty$imagesuffix" \
+        debug openstack "(post) importing trusty$imagesuffix"
+        if ! glance image-create --name="trusty$imagesuffix" \
                --container-format=bare \
                --disk-format=$diskformat \
                --property architecture="x86_64" \
-               --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype > /dev/null 2>&1
+               --visibility=public --file=$HOME/glance-images/trusty-server-cloudimg-amd64-$imagetype > /dev/null 2>&1; then
+            exposeResult "Waiting for Glance image import..." 1 "false"
+        fi
     fi
     if ! glance image-list --property-filter name="xenial$imagesuffix" | grep -q "xenial$imagesuffix" ; then
-        glance image-create --name="xenial$imagesuffix" \
+        debug openstack "(post) importing xenial$imagesuffix"
+        if ! glance image-create --name="xenial$imagesuffix" \
                --container-format=bare \
                --disk-format=$diskformat \
                --property architecture="x86_64" \
-               --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype > /dev/null 2>&1
+               --visibility=public --file=$HOME/glance-images/xenial-server-cloudimg-amd64-$imagetype > /dev/null 2>&1; then
+            exposeResult "Waiting for Glance image import..." 1 "false"
+        fi
     fi
 fi
 

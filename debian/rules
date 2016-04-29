@@ -4,3 +4,11 @@ PKGDIR=debian/tmp
 
 %:
 	dh $@ --with systemd
+
+override_dh_installinit:
+	dh_systemd_enable -popenstack --name=openstack openstack.service
+	dh_installinit -popenstack --no-start --noscripts
+	dh_systemd_start -popenstack --no-restart-on-upgrade
+
+override_dh_systemd_start:
+	echo "Not running dh_systemd_start"
