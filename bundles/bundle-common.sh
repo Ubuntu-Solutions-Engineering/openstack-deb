@@ -6,7 +6,7 @@ fail_cleanly() {
 
 # Get host namserver
 get_host_ns() {
-    perl -lne 's/^nameserver\s+// or next; s/\s.*//; print' /etc/resolv.conf
+    perl -lne 's/^nameserver\s+// or next; s/\s.*//; print && exit' /etc/resolv.conf
 }
 
 # NEUTRON
@@ -63,7 +63,7 @@ config_neutron() {
     # create pool of at least 5 floating ips
     debug openstack "creating floating ips"
     existingips=$(neutron floatingip-list -f csv | tail -n +2| wc -l)
-    to_create=$((50 - existingips))
+    to_create=$((10 - existingips))
     i=0
     while [ $i -ne $to_create ]; do
         neutron floatingip-create ext-net > /dev/null 2>&1
