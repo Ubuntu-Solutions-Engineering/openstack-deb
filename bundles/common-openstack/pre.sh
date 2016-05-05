@@ -16,5 +16,4 @@ if [[ $JUJU_PROVIDERTYPE =~ "lxd" ]]; then
     fi
 
 fi
-debug openstack "(pre) unknown provider type $JUJU_PROVIDERTYPE"
-exposeResult "Unknown provider type" 1 "false"
+exposeResult "Finished pre-processing..." 0 "true"
