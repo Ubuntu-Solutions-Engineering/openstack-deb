@@ -2,5 +2,6 @@ debian/openstack*debhelper*
 debian/openstack*substvars
 debian/openstack
 debian/*debhelper
+debian/*build-stamp*
 debian/files
 debian/tmp

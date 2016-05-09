@@ -2,6 +2,8 @@
 Description=OpenStack - network bridge
 Documentation=man:conjure-up(1)
 After=network-online.target
+Before=lxd.service
+Requires=network-online.target
 
 [Service]
 Type=oneshot
