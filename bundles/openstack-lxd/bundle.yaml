@@ -147,3 +147,5 @@ services:
   rabbitmq-server:
     charm: cs:xenial/rabbitmq-server
     num_units: 1
+tags:
+  - conjure-openstack
