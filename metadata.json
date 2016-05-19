@@ -1,7 +1,0 @@
-{
-  "openstack-base": {
-    "nova-compute": {
-      "allowed_assignment_types": ["BareMetal", "KVM"]
-    }
-  }
-}
