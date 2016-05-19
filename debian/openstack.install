@@ -1,3 +1,2 @@
-conjure usr/share/openstack
 init/bridge.start usr/lib/openstack
 init/bridge.stop usr/lib/openstack
