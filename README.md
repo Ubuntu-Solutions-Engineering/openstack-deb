@@ -1,2 +1,2 @@
 # openstack-deb
-> debian package for openstack solutions
+> conjure-up debian package for openstack
